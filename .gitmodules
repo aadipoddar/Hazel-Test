@@ -7,3 +7,6 @@
 [submodule "Hazel/vendor/Glad"]
 	path = Hazel/vendor/Glad
 	url = https://github.com/aadipoddar/Glad
+[submodule "Hazel/vendor/imgui"]
+	path = Hazel/vendor/imgui
+	url = https://github.com/aadipoddar/imgui
