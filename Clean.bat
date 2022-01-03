@@ -1,2 +1,0 @@
-call Clean.py
-PAUSE
