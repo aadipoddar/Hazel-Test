@@ -22,14 +22,10 @@ jobs:
       # You may pin to the exact commit or the version.
       # uses: snickerbockers/submodules-init@74927a8bb0fe1bb0f1f1e4d102384a8e69f19171
       uses: snickerbockers/submodules-init@v4
-
-    - name: Setup premake
-      # You may pin to the exact commit or the version.
-      # uses: abel0b/setup-premake@1e2c760b41abce778e60f3ef9702849d812dc2ed
-      uses: abel0b/setup-premake@v2
-      with:
-          # Premake version
-          version: 5.0.0
+      
+    - name: submodules-init
+      shell: call vender\premake\premake5.exe vs2022
+PAUSE
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
