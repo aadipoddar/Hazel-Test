@@ -24,7 +24,7 @@ jobs:
       uses: snickerbockers/submodules-init@v4
     
     - name: Calling Batch File
-      run : GenerateProjects.bat
+      run : call vender\premake\premake5.exe vs2022
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
