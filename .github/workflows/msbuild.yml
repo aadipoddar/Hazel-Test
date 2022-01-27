@@ -22,9 +22,9 @@ jobs:
       # You may pin to the exact commit or the version.
       # uses: snickerbockers/submodules-init@74927a8bb0fe1bb0f1f1e4d102384a8e69f19171
       uses: snickerbockers/submodules-init@v4
-      
-    - name: submodules-init
-      run: call vender\premake\premake5.exe vs2022
+    
+    - name: Calling Batch File
+      run : GenerateProjects.bat
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
