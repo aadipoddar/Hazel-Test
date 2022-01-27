@@ -24,8 +24,8 @@ jobs:
       uses: snickerbockers/submodules-init@v4
     
     - name: Calling Batch File
-      run: |
-          ".\GenerateProjects.bat"
+      shell: cmd
+      run: GenerateProjects.bat
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
