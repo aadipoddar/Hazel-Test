@@ -198,6 +198,7 @@ public:
 
 
 		m_Texture = Hazel::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_ChernoLogoTexture = Hazel::Texture2D::Create("assets/textures/ChernoLogo.png");
 
 
 		std::dynamic_pointer_cast<Hazel::OpenGLShader>(m_TextureShader)->Bind();
@@ -215,7 +216,7 @@ public:
 			m_CameraPosition.y += m_CameraMoveSpeed * ts;
 		else if (Hazel::Input::IsKeyPressed(HZ_KEY_DOWN))
 			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
-		
+
 		if (Hazel::Input::IsKeyPressed(HZ_KEY_A))
 			m_CameraRotation += m_CameraRotationSpeed * ts;
 		if (Hazel::Input::IsKeyPressed(HZ_KEY_D))
@@ -245,7 +246,8 @@ public:
 		}
 
 		m_Texture->Bind();
-
+		Hazel::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		m_ChernoLogoTexture->Bind();
 		Hazel::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		// Triangle
@@ -272,7 +274,7 @@ private:
 	Hazel::Ref<Hazel::Shader> m_FlatColorShader, m_TextureShader;
 	Hazel::Ref<Hazel::VertexArray> m_SquareVA;
 
-	Hazel::Ref<Hazel::Texture2D> m_Texture;
+	Hazel::Ref<Hazel::Texture2D> m_Texture, m_ChernoLogoTexture;
 
 	Hazel::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
