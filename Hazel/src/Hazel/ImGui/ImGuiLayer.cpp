@@ -5,7 +5,7 @@
 #include "examples/imgui_impl_glfw.h"
 #include "examples/imgui_impl_opengl3.h"
 
-#include "Hazel/Application.h"
+#include "Hazel/Core/Application.h"
 
 // TODO - Temp
 #include <GLFW/glfw3.h>
@@ -67,12 +67,6 @@ namespace Hazel
 	{
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
-
-		ImGui::Begin("Renderer");
-		ImGui::Text("  Vendor: %s", glGetString(GL_VENDOR));
-		ImGui::Text("  Renderer: %s", glGetString(GL_RENDERER));
-		ImGui::Text("  Version: %s", glGetString(GL_VERSION));
-		ImGui::End();
 	}
 
 	void ImGuiLayer::Begin()
