@@ -18,7 +18,7 @@ namespace Hazel
 	{
 	public:
 		Application();
-		virtual ~Application();
+		virtual ~Application() = default;
 
 		void Run();
 
@@ -50,7 +50,7 @@ namespace Hazel
 		static Application* s_Instance;
 	};
 
-	// To be defined in the Client
+	// To be defined in CLIENT
 	Application* CreateApplication();
 
 }

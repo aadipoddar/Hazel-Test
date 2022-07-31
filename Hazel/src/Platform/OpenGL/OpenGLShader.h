@@ -19,7 +19,7 @@ namespace Hazel
 		virtual ~OpenGLShader();
 
 		virtual void Bind() const override;
-		virtual void UnBind() const override;
+		virtual void Unbind() const override;
 
 		virtual const std::string& GetName() const override { return m_Name; }
 
