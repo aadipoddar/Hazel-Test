@@ -2,7 +2,7 @@
 
 // For use by Hazel Applications
 
-#include "Hazel/Core/Core.h"
+#include "Hazel/Core/Base.h"
 
 #include "Hazel/Core/Application.h"
 #include "Hazel/Core/Layer.h"
@@ -24,6 +24,7 @@
 
 #include "Hazel/Renderer/Buffer.h"
 #include "Hazel/Renderer/Shader.h"
+#include "Hazel/Renderer/Framebuffer.h"
 #include "Hazel/Renderer/Texture.h"
 #include "Hazel/Renderer/VertexArray.h"
 
