@@ -9,7 +9,8 @@
 #include "Entity.h"
 
 
-namespace Hazel {
+namespace Hazel
+{
 
 	static void DoMath(const glm::mat4& transform)
 	{
@@ -23,7 +24,7 @@ namespace Hazel {
 
 	Scene::Scene()
 	{
-#if ENTT_EXAMPLE_CODE
+	#if ENTT_EXAMPLE_CODE
 		entt::entity entity = m_Registry.create();
 		m_Registry.emplace<TransformComponent>(entity, glm::mat4(1.0f));
 
@@ -43,9 +44,9 @@ namespace Hazel {
 		auto group = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
 		for (auto entity : group)
 		{
-			auto&[transform, mesh] = group.get<TransformComponent, MeshComponent>(entity);
+			auto& [transform, mesh] = group.get<TransformComponent, MeshComponent>(entity);
 		}
-#endif
+	#endif
 	}
 
 	Scene::~Scene()
@@ -63,12 +64,37 @@ namespace Hazel {
 
 	void Scene::OnUpdate(Timestep ts)
 	{
-		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group)
+		// Render 2D
+		Camera* mainCamera = nullptr;
+		glm::mat4* cameraTransform = nullptr;
 		{
-			auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+			auto group = m_Registry.view<TransformComponent, CameraComponent>();
+			for (auto entity : group)
+			{
+				auto& [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
 
-			Renderer2D::DrawQuad(transform, sprite.Color);
+				if (camera.Primary)
+				{
+					mainCamera = &camera.Camera;
+					cameraTransform = &transform.Transform;
+					break;
+				}
+			}
+		}
+
+		if (mainCamera)
+		{
+			Renderer2D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+			for (auto entity : group)
+			{
+				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+
+				Renderer2D::DrawQuad(transform, sprite.Color);
+			}
+
+			Renderer2D::EndScene();
 		}
 	}
 
