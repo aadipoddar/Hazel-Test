@@ -20,7 +20,8 @@ namespace Hazel
 		void OnImGuiRender();
 
 	private:
-		void DeawEntityNode(Entity entity);
+		void DrawEntityNode(Entity entity);
+		void DrawComponents(Entity entity);
 
 	private:
 		Ref<Scene> m_Context;
