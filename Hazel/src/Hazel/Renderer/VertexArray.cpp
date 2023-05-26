@@ -1,13 +1,11 @@
 #include "hzpch.h"
-
 #include "Hazel/Renderer/VertexArray.h"
 
 #include "Hazel/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 
+namespace Hazel {
 
-namespace Hazel
-{
 	Ref<VertexArray> VertexArray::Create()
 	{
 		switch (Renderer::GetAPI())

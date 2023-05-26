@@ -5,9 +5,7 @@
 #include "SceneCamera.h"
 #include "ScriptableEntity.h"
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	struct TagComponent
 	{
@@ -16,9 +14,7 @@ namespace Hazel
 		TagComponent() = default;
 		TagComponent(const TagComponent&) = default;
 		TagComponent(const std::string& tag)
-			: Tag(tag)
-		{
-		}
+			: Tag(tag) {}
 	};
 
 	struct TransformComponent
@@ -27,10 +23,8 @@ namespace Hazel
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
-		TransformComponent(const glm::mat4& transform)
-			: Transform(transform)
-		{
-		}
+		TransformComponent(const glm::mat4 & transform)
+			: Transform(transform) {}
 
 		operator glm::mat4& () { return Transform; }
 		operator const glm::mat4& () const { return Transform; }
@@ -43,15 +37,13 @@ namespace Hazel
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
-			: Color(color)
-		{
-		}
+			: Color(color) {}
 	};
 
 	struct CameraComponent
 	{
 		SceneCamera Camera;
-		bool Primary = true; // TODO: This is temporary
+		bool Primary = true; // TODO: think about moving to Scene
 		bool FixedAspectRatio = false;
 
 		CameraComponent() = default;
@@ -62,7 +54,7 @@ namespace Hazel
 	{
 		ScriptableEntity* Instance = nullptr;
 
-		ScriptableEntity* (*InstantiateScript)();
+		ScriptableEntity*(*InstantiateScript)();
 		void (*DestroyScript)(NativeScriptComponent*);
 
 		template<typename T>

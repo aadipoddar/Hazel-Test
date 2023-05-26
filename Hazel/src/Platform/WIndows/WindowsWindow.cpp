@@ -1,5 +1,4 @@
 #include "hzpch.h"
-
 #include "Platform/Windows/WindowsWindow.h"
 
 #include "Hazel/Core/Input.h"
@@ -12,9 +11,7 @@
 
 #include "Platform/OpenGL/OpenGLContext.h"
 
-
-namespace Hazel
-{
+namespace Hazel {
 	
 	static uint8_t s_GLFWWindowCount = 0;
 

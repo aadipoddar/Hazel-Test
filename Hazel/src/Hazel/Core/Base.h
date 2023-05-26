@@ -14,9 +14,9 @@
 		#error "Platform doesn't support debugbreak yet!"
 	#endif
 	#define HZ_ENABLE_ASSERTS
-#else // HZ_DEBUG
+#else
 	#define HZ_DEBUGBREAK()
-#endif // HZ_DEBUG
+#endif
 
 #define HZ_EXPAND_MACRO(x) x
 #define HZ_STRINGIFY_MACRO(x) #x
@@ -25,14 +25,7 @@
 
 #define HZ_BIND_EVENT_FN(fn) [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
 
-
-
-#include "Hazel/Core/Log.h"
-#include "Hazel/Core/Assert.h"
-
-
-namespace Hazel
-{
+namespace Hazel {
 
 	template<typename T>
 	using Scope = std::unique_ptr<T>;
@@ -51,3 +44,6 @@ namespace Hazel
 	}
 
 }
+
+#include "Hazel/Core/Log.h"
+#include "Hazel/Core/Assert.h"

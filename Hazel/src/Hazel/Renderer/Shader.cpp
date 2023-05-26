@@ -1,13 +1,10 @@
 #include "hzpch.h"
-
 #include "Hazel/Renderer/Shader.h"
 
 #include "Hazel/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	Ref<Shader> Shader::Create(const std::string& filepath)
 	{

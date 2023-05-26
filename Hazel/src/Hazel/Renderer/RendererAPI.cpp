@@ -1,12 +1,9 @@
 #include "hzpch.h"
-
 #include "Hazel/Renderer/RendererAPI.h"
 
 #include "Platform/OpenGL/OpenGLRendererAPI.h"
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
 

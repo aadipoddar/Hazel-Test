@@ -4,8 +4,7 @@
 #include "Hazel/Core/Timestep.h"
 #include "Hazel/Events/Event.h"
 
-namespace Hazel
-{
+namespace Hazel {
 
 	class Layer
 	{
@@ -20,7 +19,6 @@ namespace Hazel
 		virtual void OnEvent(Event& event) {}
 
 		const std::string& GetName() const { return m_DebugName; }
-
 	protected:
 		std::string m_DebugName;
 	};

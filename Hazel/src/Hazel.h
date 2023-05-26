@@ -1,6 +1,6 @@
 #pragma once
 
-// For use by Hazel Applications
+// For use by Hazel applications
 
 #include "Hazel/Core/Base.h"
 

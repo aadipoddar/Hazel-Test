@@ -4,9 +4,7 @@
 #include "Hazel/Core/Application.h"
 #include <GLFW/glfw3.h>
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	bool Input::IsKeyPressed(const KeyCode key)
 	{

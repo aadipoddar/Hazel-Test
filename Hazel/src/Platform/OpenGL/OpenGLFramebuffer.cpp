@@ -3,9 +3,8 @@
 
 #include <glad/glad.h>
 
+namespace Hazel {
 
-namespace Hazel
-{
 	static const uint32_t s_MaxFramebufferSize = 8192;
 
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
@@ -32,7 +31,7 @@ namespace Hazel
 
 		glCreateFramebuffers(1, &m_RendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
-
+		
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_ColorAttachment);
 		glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Specification.Width, m_Specification.Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
@@ -71,7 +70,7 @@ namespace Hazel
 		}
 		m_Specification.Width = width;
 		m_Specification.Height = height;
-
+		
 		Invalidate();
 	}
 

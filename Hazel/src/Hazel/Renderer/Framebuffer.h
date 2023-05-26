@@ -2,9 +2,7 @@
 
 #include "Hazel/Core/Base.h"
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	struct FramebufferSpecification
 	{
@@ -14,7 +12,6 @@ namespace Hazel
 
 		bool SwapChainTarget = false;
 	};
-
 
 	class Framebuffer
 	{
@@ -32,5 +29,6 @@ namespace Hazel
 
 		static Ref<Framebuffer> Create(const FramebufferSpecification& spec);
 	};
+
 
 }

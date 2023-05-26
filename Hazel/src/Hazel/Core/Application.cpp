@@ -1,5 +1,4 @@
 #include "hzpch.h"
-
 #include "Hazel/Core/Application.h"
 
 #include "Hazel/Core/Log.h"
@@ -10,9 +9,7 @@
 
 #include <GLFW/glfw3.h>
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	Application* Application::s_Instance = nullptr;
 

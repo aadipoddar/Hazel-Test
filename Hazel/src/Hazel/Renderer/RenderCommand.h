@@ -2,9 +2,7 @@
 
 #include "Hazel/Renderer/RendererAPI.h"
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	class RenderCommand
 	{
@@ -18,7 +16,6 @@ namespace Hazel
 		{
 			s_RendererAPI->SetViewport(x, y, width, height);
 		}
-
 
 		static void SetClearColor(const glm::vec4& color)
 		{
@@ -34,7 +31,6 @@ namespace Hazel
 		{
 			s_RendererAPI->DrawIndexed(vertexArray, count);
 		}
-		
 	private:
 		static Scope<RendererAPI> s_RendererAPI;
 	};

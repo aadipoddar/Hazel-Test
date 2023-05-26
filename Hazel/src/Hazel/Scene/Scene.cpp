@@ -8,9 +8,7 @@
 
 #include "Entity.h"
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	Scene::Scene()
 	{
@@ -39,7 +37,7 @@ namespace Hazel
 				if (!nsc.Instance)
 				{
 					nsc.Instance = nsc.InstantiateScript();
-					nsc.Instance->m_Entity = Entity { entity, this };
+					nsc.Instance->m_Entity = Entity{ entity, this };
 					nsc.Instance->OnCreate();
 				}
 
@@ -55,7 +53,7 @@ namespace Hazel
 			for (auto entity : view)
 			{
 				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
-
+				
 				if (camera.Primary)
 				{
 					mainCamera = &camera.Camera;
@@ -67,7 +65,7 @@ namespace Hazel
 
 		if (mainCamera)
 		{
-			Renderer2D::BeginScene(*mainCamera, *cameraTransform)
+			Renderer2D::BeginScene(*mainCamera, *cameraTransform);
 
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group)
@@ -79,6 +77,7 @@ namespace Hazel
 
 			Renderer2D::EndScene();
 		}
+
 	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
@@ -94,6 +93,7 @@ namespace Hazel
 			if (!cameraComponent.FixedAspectRatio)
 				cameraComponent.Camera.SetViewportSize(width, height);
 		}
+
 	}
 
 }

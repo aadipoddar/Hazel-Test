@@ -1,8 +1,6 @@
 #pragma once
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	enum class ShaderDataType
 	{
@@ -29,7 +27,7 @@ namespace Hazel
 		HZ_CORE_ASSERT(false, "Unknown ShaderDataType!");
 		return 0;
 	}
-	
+
 	struct BufferElement
 	{
 		std::string Name;
@@ -85,13 +83,11 @@ namespace Hazel
 		std::vector<BufferElement>::iterator end() { return m_Elements.end(); }
 		std::vector<BufferElement>::const_iterator begin() const { return m_Elements.begin(); }
 		std::vector<BufferElement>::const_iterator end() const { return m_Elements.end(); }
-
 	private:
 		void CalculateOffsetsAndStride()
 		{
 			size_t offset = 0;
 			m_Stride = 0;
-
 			for (auto& element : m_Elements)
 			{
 				element.Offset = offset;
@@ -99,7 +95,6 @@ namespace Hazel
 				m_Stride += element.Size;
 			}
 		}
-
 	private:
 		std::vector<BufferElement> m_Elements;
 		uint32_t m_Stride = 0;

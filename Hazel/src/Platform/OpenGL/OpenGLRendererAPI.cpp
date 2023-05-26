@@ -1,12 +1,10 @@
 #include "hzpch.h"
-
 #include "Platform/OpenGL/OpenGLRendererAPI.h"
 
 #include <glad/glad.h>
 
-
-namespace Hazel
-{
+namespace Hazel {
+	
 	void OpenGLMessageCallback(
 		unsigned source,
 		unsigned type,

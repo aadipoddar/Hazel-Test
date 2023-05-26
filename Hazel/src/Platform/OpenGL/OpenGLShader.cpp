@@ -1,4 +1,4 @@
-﻿#include "hzpch.h"
+#include "hzpch.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 #include <fstream>
@@ -6,10 +6,7 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-
-
-namespace Hazel
-{
+namespace Hazel {
 
 	static GLenum ShaderTypeFromString(const std::string& type)
 	{
@@ -115,12 +112,11 @@ namespace Hazel
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
 		HZ_PROFILE_FUNCTION();
+
 		GLuint program = glCreateProgram();
-		HZ_CORE_ASSERT(shaderSources.size() <= 2, "We only Support 2 shaders for now");
+		HZ_CORE_ASSERT(shaderSources.size() <= 2, "We only support 2 shaders for now");
 		std::array<GLenum, 2> glShaderIDs;
-
 		int glShaderIDIndex = 0;
-
 		for (auto& kv : shaderSources)
 		{
 			GLenum type = kv.first;
@@ -153,7 +149,7 @@ namespace Hazel
 			glAttachShader(program, shader);
 			glShaderIDs[glShaderIDIndex++] = shader;
 		}
-
+		
 		m_RendererID = program;
 
 		// Link our program
@@ -173,7 +169,7 @@ namespace Hazel
 
 			// We don't need the program anymore.
 			glDeleteProgram(program);
-
+			
 			for (auto id : glShaderIDs)
 				glDeleteShader(id);
 
@@ -188,8 +184,6 @@ namespace Hazel
 			glDeleteShader(id);
 		}
 	}
-
-
 
 	void OpenGLShader::Bind() const
 	{
@@ -237,14 +231,13 @@ namespace Hazel
 
 		UploadUniformFloat4(name, value);
 	}
-	
+
 	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value)
 	{
 		HZ_PROFILE_FUNCTION();
 
 		UploadUniformMat4(name, value);
 	}
-
 
 	void OpenGLShader::UploadUniformInt(const std::string& name, int value)
 	{
@@ -257,7 +250,6 @@ namespace Hazel
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1iv(location, count, values);
 	}
-
 
 	void OpenGLShader::UploadUniformFloat(const std::string& name, float value)
 	{
@@ -282,8 +274,6 @@ namespace Hazel
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform4f(location, value.x, value.y, value.z, value.w);
 	}
-
-
 
 	void OpenGLShader::UploadUniformMat3(const std::string& name, const glm::mat3& matrix)
 	{

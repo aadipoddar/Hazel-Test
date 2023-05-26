@@ -2,9 +2,8 @@
 
 #include "Hazel/Renderer/VertexArray.h"
 
+namespace Hazel {
 
-namespace Hazel
-{
 	class OpenGLVertexArray : public VertexArray
 	{
 	public:
@@ -19,7 +18,6 @@ namespace Hazel
 
 		virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const { return m_VertexBuffers; }
 		virtual const Ref<IndexBuffer>& GetIndexBuffer() const { return m_IndexBuffer; }
-
 	private:
 		uint32_t m_RendererID;
 		uint32_t m_VertexBufferIndex = 0;

@@ -1,12 +1,9 @@
 #include "hzpch.h"
-
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 
 #include <glad/glad.h>
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
 	{
@@ -67,7 +64,6 @@ namespace Hazel
 		vertexBuffer->Bind();
 
 		const auto& layout = vertexBuffer->GetLayout();
-
 		for (const auto& element : layout)
 		{
 			switch (element.Type)

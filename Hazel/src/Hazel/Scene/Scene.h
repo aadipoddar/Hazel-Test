@@ -5,8 +5,7 @@
 
 #include "Hazel/Core/Timestep.h"
 
-namespace Hazel
-{
+namespace Hazel {
 
 	class Entity;
 

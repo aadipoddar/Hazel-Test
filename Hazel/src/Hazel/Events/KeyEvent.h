@@ -3,9 +3,7 @@
 #include "Hazel/Events/Event.h"
 #include "Hazel/Core/KeyCodes.h"
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	class KeyEvent : public Event
 	{
@@ -31,13 +29,11 @@ namespace Hazel
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-
 			ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount << " repeats)";
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(KeyPressed)
-
 	private:
 		uint16_t m_RepeatCount;
 	};
@@ -73,5 +69,4 @@ namespace Hazel
 
 		EVENT_CLASS_TYPE(KeyTyped)
 	};
-
 }

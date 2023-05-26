@@ -6,8 +6,7 @@
 #include "Hazel/Events/KeyEvent.h"
 #include "Hazel/Events/MouseEvent.h"
 
-namespace Hazel
-{
+namespace Hazel {
 
 	class ImGuiLayer : public Layer
 	{
@@ -22,8 +21,7 @@ namespace Hazel
 		void Begin();
 		void End();
 
-		void BlockEvents(bool block) { m_BlockEvents = block; }	
-
+		void BlockEvents(bool block) { m_BlockEvents = block; }
 	private:
 		bool m_BlockEvents = true;
 		float m_Time = 0.0f;

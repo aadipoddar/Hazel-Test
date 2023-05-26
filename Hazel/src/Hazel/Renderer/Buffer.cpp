@@ -1,14 +1,11 @@
 #include "hzpch.h"
-
 #include "Hazel/Renderer/Buffer.h"
 
 #include "Hazel/Renderer/Renderer.h"
 
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
 	{
@@ -21,7 +18,7 @@ namespace Hazel
 		HZ_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
-	
+
 	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
 	{
 		switch (Renderer::GetAPI())

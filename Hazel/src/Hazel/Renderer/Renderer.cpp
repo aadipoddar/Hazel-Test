@@ -1,11 +1,9 @@
 #include "hzpch.h"
-
 #include "Hazel/Renderer/Renderer.h"
 #include "Hazel/Renderer/Renderer2D.h"
 
+namespace Hazel {
 
-namespace Hazel
-{
 	Scope<Renderer::SceneData> Renderer::s_SceneData = CreateScope<Renderer::SceneData>();
 
 	void Renderer::Init()

@@ -2,8 +2,7 @@
 
 #include "Hazel/Renderer/RendererAPI.h"
 
-namespace Hazel
-{
+namespace Hazel {
 
 	class OpenGLRendererAPI : public RendererAPI
 	{

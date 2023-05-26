@@ -2,9 +2,7 @@
 
 #include "Hazel/Renderer/Framebuffer.h"
 
-
-namespace Hazel
-{
+namespace Hazel {
 
 	class OpenGLFramebuffer : public Framebuffer
 	{
