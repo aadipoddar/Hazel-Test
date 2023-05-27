@@ -20,3 +20,9 @@
 [submodule "Hazel/vendor/stb_image"]
 	path = Hazel/vendor/stb_image
 	url = https://github.com/aadipoddar/stb_image
+[submodule "Hazel/vendor/yaml-cpp"]
+	path = Hazel/vendor/yaml-cpp
+	url = https://github.com/aadipoddar/yaml-cpp
+[submodule "Hazel/vendor/entt"]
+	path = Hazel/vendor/entt
+	url = https://github.com/aadipoddar/entt
