@@ -2,7 +2,6 @@
 
 #include "Hazel.h"
 
-
 class Sandbox2D : public Hazel::Layer
 {
 public:
@@ -15,7 +14,6 @@ public:
 	void OnUpdate(Hazel::Timestep ts) override;
 	virtual void OnImGuiRender() override;
 	void OnEvent(Hazel::Event& e) override;
-	
 private:
 	Hazel::OrthographicCameraController m_CameraController;
 	

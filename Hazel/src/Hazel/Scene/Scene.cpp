@@ -100,7 +100,6 @@ namespace Hazel {
 		Renderer2D::EndScene();
 	}
 
-
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
 	{
 		m_ViewportWidth = width;
@@ -124,7 +123,7 @@ namespace Hazel {
 		{
 			const auto& camera = view.get<CameraComponent>(entity);
 			if (camera.Primary)
-				return Entity { entity, this };
+				return Entity{entity, this};
 		}
 		return {};
 	}
@@ -160,5 +159,6 @@ namespace Hazel {
 	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
 	{
 	}
+
 
 }

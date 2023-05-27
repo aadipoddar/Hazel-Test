@@ -3,8 +3,7 @@
 #include <string>
 #include <optional>
 
-namespace Hazel
-{
+namespace Hazel {
 
 	class FileDialogs
 	{

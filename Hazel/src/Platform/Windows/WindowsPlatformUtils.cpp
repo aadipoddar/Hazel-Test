@@ -8,8 +8,7 @@
 
 #include "Hazel/Core/Application.h"
 
-namespace Hazel
-{
+namespace Hazel {
 
 	std::optional<std::string> FileDialogs::OpenFile(const char* filter)
 	{

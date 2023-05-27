@@ -3,10 +3,7 @@
 
 #include "EditorLayer.h"
 
-
-
-namespace Hazel
-{
+namespace Hazel {
 
 	class Hazelnut : public Application
 	{

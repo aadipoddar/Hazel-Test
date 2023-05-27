@@ -8,8 +8,7 @@
 
 #include <yaml-cpp/yaml.h>
 
-namespace YAML
-{
+namespace YAML {
 
 	template<>
 	struct convert<glm::vec3>
@@ -64,8 +63,7 @@ namespace YAML
 	};
 
 }
-namespace Hazel
-{
+namespace Hazel {
 
 	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec3& v)
 	{
