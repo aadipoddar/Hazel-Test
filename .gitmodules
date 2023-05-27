@@ -26,3 +26,6 @@
 [submodule "Hazel/vendor/entt"]
 	path = Hazel/vendor/entt
 	url = https://github.com/aadipoddar/entt
+[submodule "Hazel/vendor/ImGuizmo"]
+	path = Hazel/vendor/ImGuizmo
+	url = https://github.com/aadipoddar/ImGuizmo
