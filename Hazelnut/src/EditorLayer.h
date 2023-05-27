@@ -3,6 +3,7 @@
 #include "Hazel.h"
 #include "Panels/SceneHierarchyPanel.h"
 
+#include "Hazel/Renderer/EditorCamera.h"
 
 namespace Hazel
 {
@@ -19,14 +20,12 @@ namespace Hazel
 		void OnUpdate(Timestep ts) override;
 		virtual void OnImGuiRender() override;
 		void OnEvent(Event& e) override;
-
 	private:
 		bool OnKeyPressed(KeyPressedEvent& e);
 
 		void NewScene();
 		void OpenScene();
 		void SaveSceneAs();
-
 	private:
 		Hazel::OrthographicCameraController m_CameraController;
 
@@ -42,6 +41,8 @@ namespace Hazel
 
 		bool m_PrimaryCamera = true;
 
+		EditorCamera m_EditorCamera;
+
 		Ref<Texture2D> m_CheckerboardTexture;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
@@ -51,7 +52,7 @@ namespace Hazel
 
 		int m_GizmoType = -1;
 
-		//Panels
+		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
 
