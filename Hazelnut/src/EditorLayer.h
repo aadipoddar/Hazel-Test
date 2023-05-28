@@ -2,10 +2,12 @@
 
 #include "Hazel.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
 
 #include "Hazel/Renderer/EditorCamera.h"
 
-namespace Hazel {
+namespace Hazel
+{
 
 	class EditorLayer : public Layer
 	{
@@ -38,7 +40,7 @@ namespace Hazel {
 		Entity m_SquareEntity;
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;
-		
+
 		Entity m_HoveredEntity;
 
 		bool m_PrimaryCamera = true;
@@ -57,6 +59,7 @@ namespace Hazel {
 
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 	};
 
 }
