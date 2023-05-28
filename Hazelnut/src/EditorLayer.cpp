@@ -12,7 +12,10 @@
 
 #include "Hazel/Math/Math.h"
 
-namespace Hazel {
+namespace Hazel
+{
+
+	extern const std::filesystem::path g_AssetPath;
 
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f), m_SquareColor({ 0.2f, 0.3f, 0.8f, 1.0f })
@@ -43,8 +46,8 @@ namespace Hazel {
 
 		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
-#if 0
-		// Entity
+	#if 0
+			// Entity
 		auto square = m_ActiveScene->CreateEntity("Green Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 
@@ -92,7 +95,7 @@ namespace Hazel {
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-#endif
+	#endif
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
@@ -120,7 +123,7 @@ namespace Hazel {
 		// Update
 		if (m_ViewportFocused)
 			m_CameraController.OnUpdate(ts);
-		
+
 		m_EditorCamera.OnUpdate(ts);
 
 		// Render
@@ -135,7 +138,7 @@ namespace Hazel {
 		// Update scene
 		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
-		auto[mx, my] = ImGui::GetMousePos();
+		auto [mx, my] = ImGui::GetMousePos();
 		mx -= m_ViewportBounds[0].x;
 		my -= m_ViewportBounds[0].y;
 		glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
@@ -248,7 +251,7 @@ namespace Hazel {
 
 		ImGui::End();
 
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2 { 0, 0 });
 		ImGui::Begin("Viewport");
 		auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
 		auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
@@ -264,7 +267,17 @@ namespace Hazel {
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
 		uint64_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
-		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2 { m_ViewportSize.x, m_ViewportSize.y }, ImVec2 { 0, 1 }, ImVec2 { 1, 0 });
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+			{
+				const wchar_t* path = (const wchar_t*)payload->Data;
+				OpenScene(std::filesystem::path(g_AssetPath) / path);
+			}
+			ImGui::EndDragDropTarget();
+		}
 
 		// Gizmos
 		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
@@ -276,7 +289,7 @@ namespace Hazel {
 			ImGuizmo::SetRect(m_ViewportBounds[0].x, m_ViewportBounds[0].y, m_ViewportBounds[1].x - m_ViewportBounds[0].x, m_ViewportBounds[1].y - m_ViewportBounds[0].y);
 
 			// Camera
-			
+
 			// Runtime camera from entity
 			// auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
 			// const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
@@ -415,14 +428,17 @@ namespace Hazel {
 	{
 		std::string filepath = FileDialogs::OpenFile("Hazel Scene (*.hazel)\0*.hazel\0");
 		if (!filepath.empty())
-		{
-			m_ActiveScene = CreateRef<Scene>();
-			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+			OpenScene(filepath);
+	}
 
-			SceneSerializer serializer(m_ActiveScene);
-			serializer.Deserialize(filepath);
-		}
+	void EditorLayer::OpenScene(const std::filesystem::path& path)
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+		SceneSerializer serializer(m_ActiveScene);
+		serializer.Deserialize(path.string());
 	}
 
 	void EditorLayer::SaveSceneAs()
