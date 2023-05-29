@@ -12,7 +12,8 @@
 
 #include "Hazel/Math/Math.h"
 
-namespace Hazel {
+namespace Hazel
+{
 
 	extern const std::filesystem::path g_AssetPath;
 
@@ -47,8 +48,8 @@ namespace Hazel {
 
 		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
-#if 0
-		// Entity
+	#if 0
+			// Entity
 		auto square = m_ActiveScene->CreateEntity("Green Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 
@@ -96,9 +97,7 @@ namespace Hazel {
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-#endif
-
-		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	#endif
 	}
 
 	void EditorLayer::OnDetach()
@@ -149,7 +148,7 @@ namespace Hazel {
 			}
 		}
 
-		auto[mx, my] = ImGui::GetMousePos();
+		auto [mx, my] = ImGui::GetMousePos();
 		mx -= m_ViewportBounds[0].x;
 		my -= m_ViewportBounds[0].y;
 		glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
@@ -262,7 +261,7 @@ namespace Hazel {
 
 		ImGui::End();
 
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2 { 0, 0 });
 		ImGui::Begin("Viewport");
 		auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
 		auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
@@ -278,7 +277,7 @@ namespace Hazel {
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
 		uint64_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
-		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2 { m_ViewportSize.x, m_ViewportSize.y }, ImVec2 { 0, 1 }, ImVec2 { 1, 0 });
 
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -300,7 +299,7 @@ namespace Hazel {
 			ImGuizmo::SetRect(m_ViewportBounds[0].x, m_ViewportBounds[0].y, m_ViewportBounds[1].x - m_ViewportBounds[0].x, m_ViewportBounds[1].y - m_ViewportBounds[0].y);
 
 			// Camera
-			
+
 			// Runtime camera from entity
 			// auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
 			// const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
@@ -414,8 +413,22 @@ namespace Hazel {
 			}
 			case Key::S:
 			{
-				if (control && shift)
-					SaveSceneAs();
+				if (control)
+				{
+					if (shift)
+						SaveSceneAs();
+					else
+						SaveScene();
+				}
+
+				break;
+			}
+
+			// Scene Commands
+			case Key::D:
+			{
+				if (control)
+					OnDuplicateEntity();
 
 				break;
 			}
@@ -463,6 +476,8 @@ namespace Hazel {
 		m_ActiveScene = CreateRef<Scene>();
 		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+		m_EditorScenePath = std::filesystem::path();
 	}
 
 	void EditorLayer::OpenScene()
@@ -474,20 +489,34 @@ namespace Hazel {
 
 	void EditorLayer::OpenScene(const std::filesystem::path& path)
 	{
+		if (m_SceneState != SceneState::Edit)
+			OnSceneStop();
+
 		if (path.extension().string() != ".hazel")
 		{
 			HZ_WARN("Could not load {0} - not a scene file", path.filename().string());
 			return;
 		}
-		
+
 		Ref<Scene> newScene = CreateRef<Scene>();
 		SceneSerializer serializer(newScene);
 		if (serializer.Deserialize(path.string()))
 		{
-			m_ActiveScene = newScene;
-			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+			m_EditorScene = newScene;
+			m_EditorScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_EditorScene);
+
+			m_ActiveScene = m_EditorScene;
+			m_EditorScenePath = path;
 		}
+	}
+
+	void EditorLayer::SaveScene()
+	{
+		if (!m_EditorScenePath.empty())
+			SerializeScene(m_ActiveScene, m_EditorScenePath);
+		else
+			SaveSceneAs();
 	}
 
 	void EditorLayer::SaveSceneAs()
@@ -495,22 +524,45 @@ namespace Hazel {
 		std::string filepath = FileDialogs::SaveFile("Hazel Scene (*.hazel)\0*.hazel\0");
 		if (!filepath.empty())
 		{
-			SceneSerializer serializer(m_ActiveScene);
-			serializer.Serialize(filepath);
+			SerializeScene(m_ActiveScene, filepath);
+			m_EditorScenePath = filepath;
 		}
+	}
+
+	void EditorLayer::SerializeScene(Ref<Scene> scene, const std::filesystem::path& path)
+	{
+		SceneSerializer serializer(scene);
+		serializer.Serialize(path.string());
 	}
 
 	void EditorLayer::OnScenePlay()
 	{
 		m_SceneState = SceneState::Play;
+
+		m_ActiveScene = Scene::Copy(m_EditorScene);
 		m_ActiveScene->OnRuntimeStart();
+
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	void EditorLayer::OnSceneStop()
 	{
 		m_SceneState = SceneState::Edit;
-		m_ActiveScene->OnRuntimeStop();
 
+		m_ActiveScene->OnRuntimeStop();
+		m_ActiveScene = m_EditorScene;
+
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OnDuplicateEntity()
+	{
+		if (m_SceneState != SceneState::Edit)
+			return;
+
+		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
+		if (selectedEntity)
+			m_EditorScene->DuplicateEntity(selectedEntity);
 	}
 
 }
