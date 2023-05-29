@@ -1,10 +1,13 @@
 #pragma once
 
+#include "Hazel/Core/UUID.h"
 #include "Scene.h"
+#include "Components.h"
 
 #include "entt.hpp"
 
-namespace Hazel {
+namespace Hazel
+{
 
 	class Entity
 	{
@@ -46,6 +49,8 @@ namespace Hazel {
 		operator entt::entity() const { return m_EntityHandle; }
 		operator uint32_t() const { return (uint32_t)m_EntityHandle; }
 
+		UUID GetUUID() { return GetComponent<IDComponent>().ID; }
+
 		bool operator==(const Entity& other) const
 		{
 			return m_EntityHandle == other.m_EntityHandle && m_Scene == other.m_Scene;
@@ -56,7 +61,7 @@ namespace Hazel {
 			return !(*this == other);
 		}
 	private:
-		entt::entity m_EntityHandle{ entt::null };
+		entt::entity m_EntityHandle { entt::null };
 		Scene* m_Scene = nullptr;
 	};
 
