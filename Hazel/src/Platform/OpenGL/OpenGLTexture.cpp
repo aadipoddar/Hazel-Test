@@ -3,8 +3,7 @@
 
 #include <stb_image.h>
 
-namespace Hazel
-{
+namespace Hazel {
 
 	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
 		: m_Width(width), m_Height(height)
@@ -36,7 +35,7 @@ namespace Hazel
 			HZ_PROFILE_SCOPE("stbi_load - OpenGLTexture2D::OpenGLTexture2D(const std::string&)");
 			data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 		}
-
+			
 		if (data)
 		{
 			m_IsLoaded = true;

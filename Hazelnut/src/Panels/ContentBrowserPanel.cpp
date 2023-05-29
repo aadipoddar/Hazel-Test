@@ -3,10 +3,9 @@
 
 #include <imgui/imgui.h>
 
-namespace Hazel
-{
+namespace Hazel {
 
-// Once we have projects, change this
+	// Once we have projects, change this
 	extern const std::filesystem::path g_AssetPath = "assets";
 
 	ContentBrowserPanel::ContentBrowserPanel()
@@ -44,7 +43,7 @@ namespace Hazel
 			const auto& path = directoryEntry.path();
 			auto relativePath = std::filesystem::relative(path, g_AssetPath);
 			std::string filenameString = relativePath.filename().string();
-
+			
 			ImGui::PushID(filenameString.c_str());
 			Ref<Texture2D> icon = directoryEntry.is_directory() ? m_DirectoryIcon : m_FileIcon;
 			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
