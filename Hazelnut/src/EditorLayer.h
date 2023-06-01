@@ -6,8 +6,7 @@
 
 #include "Hazel/Renderer/EditorCamera.h"
 
-namespace Hazel
-{
+namespace Hazel {
 
 	class EditorLayer : public Layer
 	{
@@ -24,7 +23,7 @@ namespace Hazel
 	private:
 		bool OnKeyPressed(KeyPressedEvent& e);
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
-
+		
 		void OnOverlayRender();
 
 		void NewScene();
@@ -57,7 +56,7 @@ namespace Hazel
 		Entity m_SquareEntity;
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;
-
+		
 		Entity m_HoveredEntity;
 
 		bool m_PrimaryCamera = true;

@@ -1,4 +1,3 @@
-#pragma once
 //--------------------------
 // - Hazel 2D -
 // Renderer2D Line Shader

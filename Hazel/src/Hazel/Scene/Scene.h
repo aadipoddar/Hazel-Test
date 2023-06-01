@@ -8,8 +8,7 @@
 
 class b2World;
 
-namespace Hazel
-{
+namespace Hazel {
 
 	class Entity;
 

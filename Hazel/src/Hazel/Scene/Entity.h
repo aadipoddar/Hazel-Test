@@ -6,8 +6,7 @@
 
 #include "entt.hpp"
 
-namespace Hazel
-{
+namespace Hazel {
 
 	class Entity
 	{
@@ -70,7 +69,7 @@ namespace Hazel
 			return !(*this == other);
 		}
 	private:
-		entt::entity m_EntityHandle { entt::null };
+		entt::entity m_EntityHandle{ entt::null };
 		Scene* m_Scene = nullptr;
 	};
 

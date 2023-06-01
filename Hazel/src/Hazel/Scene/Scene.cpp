@@ -1,5 +1,6 @@
 #include "hzpch.h"
 #include "Scene.h"
+#include "Entity.h"
 
 #include "Components.h"
 #include "ScriptableEntity.h"
@@ -16,8 +17,7 @@
 #include "box2d/b2_polygon_shape.h"
 #include "box2d/b2_circle_shape.h"
 
-namespace Hazel
-{
+namespace Hazel {
 
 	static b2BodyType Rigidbody2DTypeToBox2DBody(Rigidbody2DComponent::BodyType bodyType)
 	{
@@ -33,7 +33,8 @@ namespace Hazel
 	}
 
 	Scene::Scene()
-	{ }
+	{
+	}
 
 	Scene::~Scene()
 	{
@@ -100,7 +101,7 @@ namespace Hazel
 		}
 
 		// Copy components (except IDComponent and TagComponent)
-		CopyComponent(AllComponents {}, dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent(AllComponents{}, dstSceneRegistry, srcSceneRegistry, enttMap);
 
 		return newScene;
 	}
@@ -155,7 +156,7 @@ namespace Hazel
 				if (!nsc.Instance)
 				{
 					nsc.Instance = nsc.InstantiateScript();
-					nsc.Instance->m_Entity = Entity { entity, this };
+					nsc.Instance->m_Entity = Entity{ entity, this };
 					nsc.Instance->OnCreate();
 				}
 
@@ -193,7 +194,7 @@ namespace Hazel
 			for (auto entity : view)
 			{
 				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
-
+				
 				if (camera.Primary)
 				{
 					mainCamera = &camera.Camera;
@@ -290,7 +291,7 @@ namespace Hazel
 		{
 			const auto& camera = view.get<CameraComponent>(entity);
 			if (camera.Primary)
-				return Entity { entity, this };
+				return Entity{entity, this};
 		}
 		return {};
 	}
@@ -298,13 +299,7 @@ namespace Hazel
 	void Scene::DuplicateEntity(Entity entity)
 	{
 		Entity newEntity = CreateEntity(entity.GetName());
-		CopyComponentIfExists(AllComponents {}, newEntity, entity);
-	}
-
-	template<typename T>
-	void Scene::OnComponentAdded(Entity entity, T& component)
-	{
-		// static_assert(false);
+		CopyComponentIfExists(AllComponents{}, newEntity, entity);
 	}
 
 	void Scene::OnPhysics2DStart()
@@ -396,14 +391,22 @@ namespace Hazel
 
 		Renderer2D::EndScene();
 	}
+  
+  template<typename T>
+	void Scene::OnComponentAdded(Entity entity, T& component)
+	{
+		static_assert(sizeof(T) == 0);
+	}
 
 	template<>
 	void Scene::OnComponentAdded<IDComponent>(Entity entity, IDComponent& component)
-	{ }
+	{
+	}
 
 	template<>
 	void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& component)
-	{ }
+	{
+	}
 
 	template<>
 	void Scene::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent& component)
@@ -414,30 +417,37 @@ namespace Hazel
 
 	template<>
 	void Scene::OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent& component)
-	{ }
+	{
+	}
 
 	template<>
 	void Scene::OnComponentAdded<CircleRendererComponent>(Entity entity, CircleRendererComponent& component)
-	{ }
+	{
+	}
 
 	template<>
 	void Scene::OnComponentAdded<TagComponent>(Entity entity, TagComponent& component)
-	{ }
+	{
+	}
 
 	template<>
 	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
-	{ }
+	{
+	}
 
 	template<>
 	void Scene::OnComponentAdded<Rigidbody2DComponent>(Entity entity, Rigidbody2DComponent& component)
-	{ }
+	{
+	}
 
 	template<>
 	void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity entity, BoxCollider2DComponent& component)
-	{ }
+	{
+	}
 
 	template<>
 	void Scene::OnComponentAdded<CircleCollider2DComponent>(Entity entity, CircleCollider2DComponent& component)
-	{ }
+	{
+	}
 
 }
